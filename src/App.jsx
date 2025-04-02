@@ -1,7 +1,8 @@
 import DataTable from "react-data-table-component"
 import { data } from "./assets/data"
 
-
+import './App.css'
+import { useState } from "react"
 
 const columns = [
   {
@@ -30,6 +31,15 @@ const columns = [
 ]
 
 function App() {
+
+  const [records, setRecords] = useState(data)
+
+  const handleChange = (e) => {
+    let query = e.target.value;
+    const newrecords = data.filter(item => item.title.toLocaleLowerCase().includes(query.toLocaleLowerCase()))
+    setRecords(newrecords)
+
+  }
   
   const customStyles = {
     headCells : {
@@ -44,11 +54,18 @@ function App() {
 
   return (
     <>
+    
       <div>
+
+        <div className="search">
+          <h2>Movie List</h2>
+          <input type="text" placeholder="Enter the Name"  onChange={handleChange}/>
+        </div>
         <DataTable 
         columns={columns} 
-        data={data}
+        data={records}
         customStyles={customStyles}
+        pagination
         />
       </div>
     </>
