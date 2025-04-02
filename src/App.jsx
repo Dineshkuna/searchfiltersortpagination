@@ -1,33 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import DataTable from "react-data-table-component"
+import { data } from "./assets/data"
+
+
+
+const columns = [
+  {
+    name: "Title",
+    selector: row => row.title
+  },
+  {
+    name: "Director",
+    selector: row => row.director
+  },
+  {
+    name: "Year",
+    selector: row => row.year,
+    sortable : true
+  },
+  {
+    name: "Action",
+    // eslint-disable-next-line no-unused-vars
+    cell: (row) => (
+    <div>
+      <button className="readBtn Btn">Read</button>
+      <button className="editBtn Btn">Edit</button>
+      <button className="deleteBtn Btn">Delete</button>
+    </div>)
+  },
+]
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const customStyles = {
+    headCells : {
+      style : {
+        backgroundColor: "black",
+        color: "white",
+        fontSize: "17px",
+        fontWeight: "bolder",
+      }
+    }
+  }
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <DataTable 
+        columns={columns} 
+        data={data}
+        customStyles={customStyles}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
